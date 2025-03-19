@@ -13,15 +13,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Debug Variables
+        run: |
+          echo "SFTP_HOST=${{ vars.SFTP_HOST }}"
+          echo "SFTP_USER=${{ vars.SFTP_USER }}"
+        shell: bash
+
       - name: Upload files via SFTP
         uses: appleboy/sftp-action@master
         with:
           host: ${{ vars.SFTP_HOST }}
           username: ${{ vars.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
-          # Alternative avec clé privée :
-          # key: ${{ secrets.SFTP_PRIVATE_KEY }}
           port: 2022
-          source: "./*"  # Fichiers à envoyer
-          target: "/"  # Dossier distant
-
+          source: "./*"  # Tous les fichiers à envoyer
+          target: "~/"  # Dossier distant (adapte selon tes permissions)
+          overwrite: true  # Remplace les fichiers existants
+          timeout: 30s
