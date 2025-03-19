@@ -25,8 +25,8 @@ jobs:
           host: ${{ vars.SFTP_HOST }}
           username: ${{ vars.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
-          port: 2022
+          port: 22
           source: "./*"
-          target: "~/cogs/"
+          target: "/var/lib/vz/pterodactyl/volumes/${{ vars.ID_SERVERS }}/"
           overwrite: true
           timeout: 30s
