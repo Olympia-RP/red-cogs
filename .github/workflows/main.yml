@@ -25,7 +25,7 @@ jobs:
           username: ${{ vars.SFTP_USER }}
           port: 2022
           source: "./*"  # Fichiers à envoyer
-          target: "/home/${{ vars.SFTP_USER }}/"  # Dossier distant
+          target: "/cogs/"  # Dossier distant
           key: ${{ secrets.SFTP_PRIVATE_KEY }}  # Assure-toi que la clé privée est également utilisée ici
           overwrite: true
           timeout: 30s
