@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.SFTP_PASS }}
           # Alternative avec clé privée :
           # key: ${{ secrets.SFTP_PRIVATE_KEY }}
-          port: 22
+          port: 2022
           source: "./*"  # Fichiers à envoyer
           target: "/"  # Dossier distant
 
