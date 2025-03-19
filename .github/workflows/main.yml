@@ -13,15 +13,19 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SFTP_PRIVATE_KEY }}
+
       - name: Upload files via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.SFTP_HOST }}
           username: ${{ vars.SFTP_USER }}
-          password: ${{ secrets.SFTP_PASS }}
           port: 2022
-          source: "./*"  # Envoie tous les fichiers sans tar
-          target: "~/cogs/"
+          source: "./*"  # Fichiers à envoyer
+          target: "/cogs/${{ vars.SFTP_USER }}/"  # Dossier distant
           overwrite: true
           timeout: 30s
-          tar_exec: ""  # Désactive l'utilisation de tar
+          debug: true
