@@ -13,20 +13,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SFTP_PRIVATE_KEY }}  # Utilise ta clé privée stockée dans les secrets GitHub
+      - name: Debug Variables
+        run: |
+          echo "SFTP_HOST=${{ vars.SFTP_HOST }}"
+          echo "SFTP_USER=${{ vars.SFTP_USER }}"
+        shell: bash
 
       - name: Upload files via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ vars.SFTP_HOST }}  # Remplacer par un secret ou une variable définie
-          username: ${{ vars.SFTP_USER }}  # Remplacer par un secret ou une variable définie
-          port: 2022
-          source: "./*"  # Fichiers à envoyer
-          target: "/cogs/"  # Dossier distant
-          key: ${{ secrets.SFTP_PRIVATE_KEY }}  # Assure-toi que la clé privée est également utilisée ici
+          host: ${{ vars.SFTP_HOST }}
+          username: ${{ vars.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+          port: 22
+          source: "./*"
+          target: "~/cogs/"
           overwrite: true
           timeout: 30s
-          debug: true  # Active le mode debug pour des logs détaillés
