@@ -1,0 +1,27 @@
+name: Deploy via SFTP
+
+on:
+  push:
+    branches:
+      - main  # Déclenchement sur la branche principale
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Upload files via SFTP
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ vars.SFTP_HOST }}
+          username: ${{ vars.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+          # Alternative avec clé privée :
+          # key: ${{ secrets.SFTP_PRIVATE_KEY }}
+          port: 22
+          source: "./*"  # Fichiers à envoyer
+          target: "/"  # Dossier distant
+
