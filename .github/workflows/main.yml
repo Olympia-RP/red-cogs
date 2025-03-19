@@ -20,7 +20,7 @@ jobs:
         shell: bash
 
       - name: Upload files via SFTP
-        uses: appleboy/sftp-action@master
+        uses: appleboy/sftp-action@v0.1.7
         with:
           host: ${{ vars.SFTP_HOST }}
           username: ${{ vars.SFTP_USER }}
