@@ -3,7 +3,7 @@ name: Deploy via SCP
 on:
   push:
     branches:
-      - main
+      - main  # Déclenchement sur la branche principale
 
 jobs:
   deploy:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SFTP_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SFTP_PRIVATE_KEY }}  # Utilise ta clé privée stockée dans les secrets GitHub
 
       - name: Upload files via SCP
         uses: appleboy/scp-action@v0.1.7
@@ -25,7 +25,8 @@ jobs:
           username: ${{ vars.SFTP_USER }}
           port: 2022
           source: "./*"  # Fichiers à envoyer
-          target: "/cogs/${{ vars.SFTP_USER }}/"  # Dossier distant
+          target: "/home/${{ vars.SFTP_USER }}/"  # Dossier distant
+          key: ${{ secrets.SFTP_PRIVATE_KEY }}  # Assure-toi que la clé privée est également utilisée ici
           overwrite: true
           timeout: 30s
           debug: true
