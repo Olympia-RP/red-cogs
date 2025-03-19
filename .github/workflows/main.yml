@@ -13,14 +13,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Upload files via SCP (no tar)
+      - name: Upload files via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.SFTP_HOST }}
           username: ${{ vars.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
           port: 2022
-          source: "./*"  # Envoie les fichiers un par un sans tar
+          source: "./*"  # Envoie tous les fichiers sans tar
           target: "~/cogs/"
           overwrite: true
           timeout: 30s
+          tar_exec: ""  # Désactive l'utilisation de tar
