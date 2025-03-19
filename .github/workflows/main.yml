@@ -17,6 +17,7 @@ jobs:
         run: |
           echo "SFTP_HOST=${{ vars.SFTP_HOST }}"
           echo "SFTP_USER=${{ vars.SFTP_USER }}"
+          echo "ID_SERVERS=${{ vars.ID_SERVERS }}"
         shell: bash
 
       - name: Upload files via SCP
@@ -26,7 +27,7 @@ jobs:
           username: ${{ vars.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
           port: 22
-          source: "./*"
+          source: "./cogs/"
           target: "/var/lib/vz/pterodactyl/volumes/${{ vars.ID_SERVERS }}/"
           overwrite: true
           timeout: 30s
