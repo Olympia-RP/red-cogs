@@ -1,9 +1,9 @@
-name: Deploy via SFTP
+name: Deploy via SCP
 
 on:
   push:
     branches:
-      - main  # Déclenchement sur la branche principale
+      - main
 
 jobs:
   deploy:
@@ -13,20 +13,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Debug Variables
-        run: |
-          echo "SFTP_HOST=${{ vars.SFTP_HOST }}"
-          echo "SFTP_USER=${{ vars.SFTP_USER }}"
-        shell: bash
-
-      - name: Upload files via SFTP
+      - name: Upload files via SCP (no tar)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.SFTP_HOST }}
           username: ${{ vars.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
           port: 2022
-          source: "./*"  # Tous les fichiers à envoyer
-          target: "~/"  # Dossier distant (adapte selon tes permissions)
-          overwrite: true  # Remplace les fichiers existants
+          source: "./*"  # Envoie les fichiers un par un sans tar
+          target: "~/cogs/"
+          overwrite: true
           timeout: 30s
