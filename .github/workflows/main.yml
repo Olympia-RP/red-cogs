@@ -25,7 +25,7 @@ jobs:
           host: ${{ vars.SFTP_HOST }}
           username: ${{ vars.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
-          port: 22
+          port: 2022
           source: "./*"
           target: "~/cogs/"
           overwrite: true
