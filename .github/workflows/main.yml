@@ -21,12 +21,12 @@ jobs:
       - name: Upload files via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ vars.SFTP_HOST }}
-          username: ${{ vars.SFTP_USER }}
+          host: ${{ secrets.SFTP_HOST }}  # Remplacer par un secret ou une variable définie
+          username: ${{ secrets.SFTP_USER }}  # Remplacer par un secret ou une variable définie
           port: 2022
           source: "./*"  # Fichiers à envoyer
           target: "/cogs/"  # Dossier distant
           key: ${{ secrets.SFTP_PRIVATE_KEY }}  # Assure-toi que la clé privée est également utilisée ici
           overwrite: true
           timeout: 30s
-          debug: true
+          debug: true  # Active le mode debug pour des logs détaillés
